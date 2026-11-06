@@ -1,0 +1,13 @@
+age_group,outcome,sex,number_thousands,percentage,ci_low,ci_high
+Adolescents (12-17),SUD,Male,897,6.8,6.3,7.3
+Adolescents (12-17),SUD,Female,1251,9.9,9.3,10.5
+Adolescents (12-17),MDE,Male,1247,9.8,9.1,10.4
+Adolescents (12-17),MDE,Female,3146,26.0,25.0,27.0
+Adolescents (12-17),Co-occurring SUD and MDE,Male,237,1.9,1.6,2.2
+Adolescents (12-17),Co-occurring SUD and MDE,Female,620,5.1,4.7,5.6
+Adults (18+),SUD,Male,26939,21.4,20.8,21.9
+Adults (18+),SUD,Female,19426,14.6,14.2,15.1
+Adults (18+),MDE,Male,8313,6.6,6.3,6.9
+Adults (18+),MDE,Female,13616,10.3,9.9,10.6
+Adults (18+),Co-occurring SUD and MDE,Male,4062,3.2,3.0,3.4
+Adults (18+),Co-occurring SUD and MDE,Female,4970,3.7,3.6,3.9

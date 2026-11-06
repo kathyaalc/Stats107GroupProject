@@ -1,0 +1,85 @@
+---
+title: "31 - Data Visualization: Male vs. Female SUD and MDE"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE,
+                      fig.width = 7, fig.height = 4)
+source("00_requirements.R")   # loads packages
+source("02_funct_Plots.R")    # loads plotting functions
+```
+
+## 1. Load the data
+
+The data come from Appendix Table 1 of the SAMHSA NSDUH Short Report
+(March 2026), annual averages for 2022-2024. Counts are in thousands.
+
+```{r load-data}
+sex_data <- read_csv("data/nsduh_table1_sex.csv")
+
+sex_data <- sex_data %>%
+  mutate(sex = factor(sex, levels = c("Male", "Female")),
+         age_group = factor(age_group, levels = c("Adolescents (12-17)", "Adults (18+)")),
+         outcome = factor(outcome, levels = c("SUD", "MDE", "Co-occurring SUD and MDE")))
+
+glimpse(sex_data)
+```
+
+## 2. Numerical summary
+
+```{r summary-table}
+diff_data <- compute_sex_differences(sex_data)
+
+diff_data %>%
+  transmute(`Age group` = age_group, Outcome = outcome,
+            `Male (%)` = percentage_Male, `Female (%)` = percentage_Female,
+            `Diff F-M (pp)` = round(diff_pp, 1),
+            `Ratio F/M` = round(ratio_F_to_M, 2)) %>%
+  kable(caption = "Past-year prevalence by sex, NSDUH 2022-2024")
+```
+
+## 3. Prevalence by sex
+
+Grouped bars compare male and female prevalence for each outcome, with 95%
+confidence intervals. Non-overlapping intervals indicate a clear difference.
+
+```{r plot-prevalence, fig.height=4.5}
+plot_sex_comparison(sex_data, "Past-year SUD and MDE by sex")
+```
+
+**Interpretation:** Among adults, males have a higher SUD prevalence than
+females (21.4% vs. 14.6%), which supports our hypothesis. Among adolescents,
+the pattern reverses: females are higher for SUD (9.9% vs. 6.8%), and far
+higher for MDE (26.0% vs. 9.8%). The confidence intervals do not overlap in
+any comparison, so all differences are clear.
+
+## 4. Number of people affected
+
+```{r plot-counts, fig.height=4.5}
+plot_counts(sex_data, "Estimated number of people with SUD/MDE by sex")
+```
+
+**Interpretation:** Adult males account for about 26.9 million people with an
+SUD versus 19.4 million adult females, so the larger percentage also means
+a larger absolute burden.
+
+## 5. Size of the gender gap
+
+```{r plot-difference}
+plot_sex_difference(diff_data, "Female - male difference in prevalence")
+```
+
+**Interpretation:** Points left of zero mean higher prevalence in males;
+points right of zero mean higher in females. Adult SUD is the only outcome
+where males are clearly higher. Every other outcome is higher for females.
+
+## 6. Planned further visualizations
+
+- Female-only breakdowns (poverty level, education, employment) from
+  Tables 2-4 of the report.
+- Suicidality and SUD severity by SUD/MDE status (Tables 5-7).
+- Opioid-specific data from the full NSDUH public-use files, since this
+  short report covers SUD in general.
