@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE,
                       fig.width = 7, fig.height = 4)
 source("00_requirements.R")   # loads packages
 source("02_funct_Plots.R")    # loads plotting functions
+dir.create("figures", showWarnings = FALSE)   # folder where figures are saved
 ```
 
 ## 1. Load the data
@@ -47,7 +48,9 @@ Grouped bars compare male and female prevalence for each outcome, with 95%
 confidence intervals. Non-overlapping intervals indicate a clear difference.
 
 ```{r plot-prevalence, fig.height=4.5}
-plot_sex_comparison(sex_data, "Past-year SUD and MDE by sex")
+fig1 <- plot_sex_comparison(sex_data, "Past-year SUD and MDE by sex")
+ggsave("figures/fig1_prevalence_by_sex.png", fig1, width = 7, height = 4.5, dpi = 300)
+fig1
 ```
 
 **Interpretation:** Among adults, males have a higher SUD prevalence than
@@ -59,7 +62,9 @@ any comparison, so all differences are clear.
 ## 4. Number of people affected
 
 ```{r plot-counts, fig.height=4.5}
-plot_counts(sex_data, "Estimated number of people with SUD/MDE by sex")
+fig2 <- plot_counts(sex_data, "Estimated number of people with SUD/MDE by sex")
+ggsave("figures/fig2_counts_by_sex.png", fig2, width = 7, height = 4.5, dpi = 300)
+fig2
 ```
 
 **Interpretation:** Adult males account for about 26.9 million people with an
@@ -69,7 +74,9 @@ a larger absolute burden.
 ## 5. Size of the gender gap
 
 ```{r plot-difference}
-plot_sex_difference(diff_data, "Female - male difference in prevalence")
+fig3 <- plot_sex_difference(diff_data, "Female - male difference in prevalence")
+ggsave("figures/fig3_sex_difference.png", fig3, width = 7, height = 4, dpi = 300)
+fig3
 ```
 
 **Interpretation:** Points left of zero mean higher prevalence in males;
