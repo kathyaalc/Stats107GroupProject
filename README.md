@@ -14,8 +14,11 @@
 **README.md** Provides an overall guide to files
 
 **figures** Folder containing our three graphs made from the data
+
   **fig1_prevalence_by_sex.png** shows the comparison of the SUD/MDE prevalence between male and female
+  
   **fig2_counts_by_sex.png** shows the estimated number of people with SUD/MDE between male and female
+  
   **fig3_sex_difference.png** Shows the difference in prevalence between males and females
 
 **Instructions**
